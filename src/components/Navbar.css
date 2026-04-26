@@ -1,0 +1,159 @@
+/*  src/components/Navbar.css
+    ─────────────────────────────────────────────────────────────────
+    CHANGE FROM PREVIOUS VERSION:
+      • Removed .navbar__brand-title and .navbar__brand-sub text styles
+      • Added .navbar__logo sizing rules
+      • Added .navbar__mobile-logo-wrap and .navbar__mobile-logo styles
+      • Navbar background changed to white (was semi-transparent) so
+        the logo with its black background renders cleanly — a white
+        navbar gives maximum contrast for the BITS logo.
+*/
+
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  height: var(--nav-h);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  transition: box-shadow 0.3s, background 0.3s;
+  border-bottom: 1px solid transparent;
+}
+
+.navbar--scrolled {
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 2px 16px rgba(33, 29, 112, 0.10);
+  border-bottom-color: var(--clr-border);
+}
+
+.navbar__inner {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 24px;
+}
+
+/* ── Logo ────────────────────────────────────────────────────── */
+.navbar__brand {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  /* Remove any default link underline/colour changes */
+  text-decoration: none;
+}
+
+.navbar__logo {
+  height: 48px;           /* fits within the 68px nav height with padding  */
+  width: auto;            /* preserves original aspect ratio automatically  */
+  object-fit: contain;
+  display: block;
+  /* White background pill so the logo crest is visible on any bg */
+  background: #ffffff;
+  border-radius: 6px;
+  padding: 3px 10px 3px 4px;
+}
+
+/* ── Desktop links ───────────────────────────────────────────── */
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+}
+
+.navbar__link {
+  font-size: 0.83rem;
+  font-weight: 500;
+  color: var(--clr-muted);
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  transition: color 0.2s, background 0.2s;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+.navbar__link:hover,
+.navbar__link--active {
+  color: var(--clr-primary);
+  background: rgba(33, 29, 112, 0.06);
+}
+.navbar__link--active {
+  font-weight: 600;
+}
+
+/* ── Hamburger ───────────────────────────────────────────────── */
+.navbar__hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  margin-left: auto;
+  padding: 6px;
+}
+.navbar__hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--clr-primary);
+  border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s;
+}
+.navbar__hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.navbar__hamburger.open span:nth-child(2) { opacity: 0; }
+.navbar__hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ── Mobile drawer ───────────────────────────────────────────── */
+.navbar__mobile {
+  display: none;
+  flex-direction: column;
+  background: var(--clr-surface);
+  border-bottom: 1px solid var(--clr-border);
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.35s ease;
+}
+.navbar__mobile--open {
+  max-height: 480px;
+  padding: 12px 0 20px;
+}
+
+/* Logo inside mobile drawer */
+.navbar__mobile-logo-wrap {
+  padding: 4px 24px 12px;
+  border-bottom: 1px solid var(--clr-border);
+  margin-bottom: 4px;
+}
+.navbar__mobile-logo {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+  background: #ffffff;
+  border-radius: 4px;
+  padding: 2px 8px 2px 2px;
+}
+
+.navbar__mobile-link {
+  padding: 12px 24px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--clr-text);
+  transition: color 0.2s, background 0.2s;
+}
+.navbar__mobile-link:hover,
+.navbar__mobile-link.active {
+  color: var(--clr-primary);
+  background: var(--clr-gold-light);
+}
+
+.navbar__mobile-email {
+  font-size: 0.78rem;
+  color: var(--clr-muted);
+  padding: 12px 24px 0;
+  border-top: 1px solid var(--clr-border);
+  margin-top: 8px;
+}
+
+/* ── Responsive breakpoint ───────────────────────────────────── */
+@media (max-width: 900px) {
+  .navbar__links     { display: none; }
+  .navbar__hamburger { display: flex; }
+  .navbar__mobile    { display: flex; }
+}

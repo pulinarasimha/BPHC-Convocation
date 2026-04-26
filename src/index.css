@@ -1,0 +1,128 @@
+/*
+  src/index.css
+  ─────────────────────────────────────────────────────────────────
+  Global stylesheet imported once in index.js.
+  • Defines CSS custom properties (design tokens) used everywhere.
+  • Applies a CSS reset so browsers start from a consistent baseline.
+  • Sets the base typography (font, size, colour).
+  • Adds smooth scrolling for in-page anchor navigation.
+
+  COLOUR PALETTE : Official BITS Pilani Brand Guidelines
+    Primary   → #E9972F (Orange, Pantone 1375) + #211D70 (Navy, Pantone 273)
+    Highlight → #ED1C24 (Red) · #76C2E5 (Sky Blue) · #FCB017 (Amber) · #FAC92E (Yellow)
+    Neutral   → #333132 · #4D4D4F · #808285 · #FFFFFF
+
+  TYPOGRAPHY : Helvetica Neue / Helvetica / Arial (brand guideline)
+*/
+
+/* ── Design tokens ─────────────────────────────────────────────── */
+:root {
+  /* ── Brand Primary Colors (BITS Official Guidelines) ─────────── */
+  --clr-primary:      #211D70;   /* Navy Blue — Pantone 273          */
+  --clr-primary-dark: #191932;   /* Darker navy for hover states      */
+  --clr-gold:         #E9972F;   /* Orange — Pantone 1375             */
+  --clr-gold-light:   #FDF0DC;   /* Light orange background tint      */
+
+  /* ── Highlight Colors ────────────────────────────────────────── */
+  --clr-highlight-red:    #ED1C24;  /* Red — Pantone 485              */
+  --clr-highlight-blue:   #76C2E5;  /* Sky Blue — Pantone 297         */
+  --clr-highlight-amber:  #FCB017;  /* Amber — Pantone 143            */
+  --clr-highlight-yellow: #FAC92E;  /* Yellow — Pantone 129           */
+
+  /* ── Neutral Colors ──────────────────────────────────────────── */
+  --clr-dark:    #211D70;        /* Navy for headings                  */
+  --clr-text:    #333132;        /* Near-black body copy               */
+  --clr-muted:   #808285;        /* Gray for secondary/muted text      */
+  --clr-border:  #D0CDE8;        /* Soft navy-tinted border            */
+  --clr-bg:      #F9F8FC;        /* Very light navy-tinted page bg     */
+  --clr-surface: #FFFFFF;        /* Card and panel surfaces            */
+  --clr-live:    #ED1C24;        /* LIVE badge red                     */
+
+  /* ── Typography (Brand Guideline: Helvetica / Arial fallback) ── */
+  --font-display: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-body:    'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+  /* ── Spacing & Layout ────────────────────────────────────────── */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+
+  --shadow-sm: 0 1px 4px rgba(0,0,0,0.07);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.10);
+
+  --nav-h:        68px;
+  --section-gap:  96px;
+}
+
+/* ── Reset ─────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: var(--font-body);
+  color: var(--clr-text);
+  background: var(--clr-bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img { display: block; max-width: 100%; }
+
+a { color: inherit; text-decoration: none; }
+
+ul { list-style: none; }
+
+button { cursor: pointer; border: none; background: none; font: inherit; }
+
+/* ── Utility classes ───────────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section {
+  padding: var(--section-gap) 0;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  color: var(--clr-primary);
+  margin-bottom: 0.3em;
+  letter-spacing: -0.01em;
+}
+
+.section-subtitle {
+  font-size: 1rem;
+  color: var(--clr-muted);
+  margin-bottom: 2.5rem;
+}
+
+.divider {
+  width: 56px;
+  height: 3px;
+  background: var(--clr-gold);
+  margin: 0.6rem 0 2rem;
+  border-radius: 2px;
+}
+
+/* ── Scroll-reveal animation base ─────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Responsive helpers ────────────────────────────────────────── */
+@media (max-width: 768px) {
+  :root { --section-gap: 64px; }
+}
