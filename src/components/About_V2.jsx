@@ -2,41 +2,37 @@
   src/components/About.jsx
   ─────────────────────────────────────────────────────────────────
   CHANGE FROM PREVIOUS VERSION:
-    Quick Info Strip updated to remove duplication with the
-    Important Dates section below it.
+    Removed the generic stats cards (2001, 50+, 5000+, 4).
+    Replaced with a "Quick Info Strip" showing the 4 most important
+    pieces of information a visitor needs:
+      • Ceremony Date
+      • Venue
+      • Rehearsal Date
+      • Registration Status
 
-    REMOVED from strip : Ceremony Date, Rehearsal
-      (these already appear in ImportantDates section)
-
-    REPLACED with     : Dress Code, Guest Seats
-      (unique info not shown anywhere else on the page)
-
-  QUICK INFO STRIP NOW SHOWS:
-    • Venue        — where the ceremony is held
-    • Dress Code   — formal attire reminder
-    • Guest Seats  — max 2 per graduate
-    • Registration — current status (highlighted)
+    These values come from content.js so you only ever edit one file.
 */
 import React from 'react';
+import { importantDates, siteConfig } from '../data/content';
 import './About.css';
 
 const quickInfo = [
   {
-    icon: '🏛️',
+    icon: '📅',
+    label: 'Ceremony Date',
+    value: 'To be announced',
+    highlight: false,
+  },
+  {
+    icon: '📍',
     label: 'Venue',
     value: 'BITS Pilani, Hyderabad Campus',
     highlight: false,
   },
   {
-    icon: '👔',
-    label: 'Dress Code',
-    value: 'Formal Attire Required',
-    highlight: false,
-  },
-  {
-    icon: '👨‍👩‍👧',
-    label: 'Guest Seats',
-    value: 'Maximum 2 per Graduate',
+    icon: '🎓',
+    label: 'Rehearsal',
+    value: 'Mandatory for all graduates',
     highlight: false,
   },
   {
