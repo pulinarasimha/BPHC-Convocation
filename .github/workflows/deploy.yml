@@ -24,7 +24,7 @@ jobs:
             npm install
             pm2 restart all
           EOF
-name: Deploy Convocation
+name: Deploy Convocation V2
 
 on:
   push:
