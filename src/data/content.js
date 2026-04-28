@@ -103,12 +103,12 @@ export const instructions = [
 ];
 
 export const galleryImages = [
-  { id: 1, src: '/images/Banners/2024/001.JPG', alt: 'Convocation 2025 – Ceremony Hall' },
-  { id: 2, src: '/images/Banners/2024/002.JPG', alt: 'Convocation 2025 – Degree Distribution' },
-  { id: 3, src: '/images/Banners/2024/003.JPG', alt: 'Convocation 2025 – Graduates' },
-  { id: 4, src: '/images/Banners/2024/004.JPG', alt: 'Convocation 2025 – Faculty' },
-  { id: 5, src: '/images/Banners/2024/005.JPG', alt: 'Convocation 2025 – Campus' },
-  { id: 6, src: '/images/Banners/2024/007.JPG', alt: 'Convocation 2025 – Group Photo' },
+  { id: 1, src: '/images/Banners/2025/001.png', alt: 'Convocation 2025 – Ceremony Hall' },
+  { id: 2, src: '/images/Banners/2025/002.png', alt: 'Convocation 2025 – Degree Distribution' },
+  { id: 3, src: '/images/Banners/2025/003.png', alt: 'Convocation 2025 – Graduates' },
+  { id: 4, src: '/images/Banners/2025/004.png', alt: 'Convocation 2025 – Faculty' },
+  { id: 5, src: '/images/Banners/2025/005.png', alt: 'Convocation 2025 – Campus' },
+  { id: 6, src: '/images/Banners/2025/007.png', alt: 'Convocation 2025 – Group Photo' },
 ];
 
 export const navLinks = [
