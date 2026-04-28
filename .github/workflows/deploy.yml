@@ -15,9 +15,11 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.129.159.20.236 }} >> ~/.ssh/known_hosts
-          ssh ${{ secrets.ubuntu }}@${{ secrets.129.159.20.236 }} << 'EOF'
-            cd /home/ubuntu/convocation-spa/BPHC-Convocation
+
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
+            cd ${{ secrets.APP_DIR }}
             git pull origin main
             npm install
             npm run build
