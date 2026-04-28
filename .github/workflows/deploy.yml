@@ -13,14 +13,38 @@ jobs:
       - name: Deploy via SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.-----BEGIN RSA PRIVATE KEY-----
+MIIEogIBAAKCAQEAx3vx1zL4hYFDT6J7xJIsEdZCzlQZB3AhiS9eSzmNREqAXCPL
+eeKoGuiRmce8RhCIbG2tgy3+j/BlYDtaY6NkYc/UTQL4kvxqKiY63Ld6WY/19D/E
+6TFHaTq/n5zksKQ0rtpOmtcohiaAXEM1Eu6RHqeFFftFoucVoOqw39X6xK65n7yV
+/c7QdDdcj+E/WSeIvRJNN9OFi8pYS+5nVY8S57XmynQOh0l8FYtosHyF67XQGtac
+deuDDIaBbGRpA7eEcD8MiqCqpUt680I+Zl9PSZfIfo+s94JQPZRn67T91MobV+gV
+pOAfuGBZWxu+hLtRS1qLFj9VSdlaYHMfsVKRtQIDAQABAoIBAA0FIHhIyeLA2Jla
+hBSE695wKyUXZRjQr0eqcU+cnoVODYm2BmJaslkrQ9GTMU0raBQXpoMQ3fQcHynE
+RfaJ5BPkQjmSj5Hcart8ikv8p74vwMBj5yDHSB9sp7Qtw9lppkyhUA8YKvtyiN88
+vbqSGqOzEGMqZtWmmolJuCir6TWsCh5hxeX9grDf1Lgi5TOOuTmUdNoXqAhtOie/
+qheZUGKgz4Lqocu/eOAAAH9o7aoCTISoYYjr6yixXnJYGvlcHr3DpONbF8k0dwLL
+4kewF+1EDtYI7pb1z6vqGIb+xFpM/S8ulALMTPS1r1JIuxGLWeEBdl4GDKgBiu7y
+yQBDLFECgYEA/Qb3+pzSNRqO6BdYffVgshTcD80xUkpfiOv6Gf3vWKDtJMAChXk1
+HvdW8GAngDw1MVo6QxREAq8cvphzFPtv+5b+B9XucMh+UeMZ99vnNWe3SmQ5b0kH
+8N+E8cpXK911dKqb4ChXoy52YPTztKQJunUiRJzZuzJv/+JCv87uO+0CgYEAydPv
+LAu1b8mpjnoNsAlheAyQ8ZYNh7ngMnRnOEo5PSNAr2JxA5I1Pi2fictxp7KtNI38
+Pn3Yc8pGaZTragdQ9F9hW2z4Lg37QqmVhgkOKcfIuhCnxsUbRB+A0S8GLowIWIFS
+1yxgwxlU0751hUw+1c41rfPKhl5CfF4RQbArQ+kCgYBprbtspIr3Ovxs2zNOiGm2
+dxfiUaVD5WQ5X7W5nWGV9sCVFMz4ykLxiAR7qO1Wlc7xqemjkpdFN7YdtLZ8EPgY
+cFvxEdzgphx8Pwndh67tkz/uhiWm4S274N85zXTTEU+5RniMCs1vjjxLCoOu8sRN
+aBbD6W7WzJ4SlYGjct31kQKBgCONCVwg09zVEODf7vlLLbgPvphPbiKyQyOgDW6E
+5IA4bXR3SqDuaCKDts5235ZCiu/u8revQyliP/TpHm6Wy1PAWU3Za/3wyIl9hbEO
+d0g0wM7FkEgbACqHwhEWz2fzkqTEYus0DfdPxvllWx4XyBmxMRNrFgmFIQD3MOL5
+PSXBAoGAG5Z0b4luUob0+dOTZiKUZaXjC8r5pI/plLclA/3xYGuwXAHNJzsS2SzP
+OW2+ohV9RvKpS0r2KsgmEkg+bfakcc3EcD0bt+c/fZI0oHBq0KDTCHuLh4RYSJwG
+dD0U0okDRZw87evysbu+rqS9vGEKCQmyteQ0rL9KnwGQKTKDRTc=
+-----END RSA PRIVATE KEY----- }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-
           ssh-keyscan -H ${{ secrets.129.159.20.236 }} >> ~/.ssh/known_hosts
-
           ssh ${{ secrets.ubuntu }}@${{ secrets.129.159.20.236 }} << 'EOF'
-            cd ${{ secrets./home/ubuntu/convocation-spa/BPHC-Convocation }}
+            cd /home/ubuntu/convocation-spa/BPHC-Convocation
             git pull origin main
             npm install
-            pm2 restart all
+            npm run build
           EOF
