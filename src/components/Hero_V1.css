@@ -28,10 +28,10 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    to right,
-    rgba(10, 8, 30, 0.82) 0%,    /* dark navy on left — text side */
-    rgba(10, 8, 30, 0.45) 50%,   /* medium fade in center */
-    rgba(10, 8, 30, 0.10) 100%   /* almost transparent on right — image side */
+    to bottom,
+    rgba(20, 5, 0, 0.55) 0%,
+    rgba(20, 5, 0, 0.45) 60%,
+    rgba(20, 5, 0, 0.70) 100%
   );
 }
 
@@ -41,12 +41,10 @@
   z-index: 2;
   color: #fff;
   max-width: 700px;
-  margin-left: 0;        /* stick to left */
-  padding-left: .2;
 }
 
 .hero__eyebrow {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -110,7 +108,7 @@
 }
 
 .hero__email {
-  font-size: 0.9rem;
+  font-size: 0.82rem;
   color: rgba(255,255,255,0.7);
   display: flex;
   align-items: center;

@@ -1,162 +1,115 @@
 /*
   src/components/Contact.jsx
   ─────────────────────────────────────────────────────────────────
-  WHY THIS FILE:
-    Provides a contact form + address/email information.
+  CHANGE FROM PREVIOUS VERSION:
+    Removed the contact form entirely.
+    Now displays only:
+      • Address
+      • Email
+      • Website
+      • Phone (added as enhancement)
+      • Google Maps embed for visual location reference
 
-  FORM BEHAVIOUR:
-    • Controlled inputs — React state is the single source of truth.
-    • Client-side validation before submit.
-    • On submit: shows a success toast (no backend needed in SPA mode).
-      → In a full-stack app, replace the setTimeout with a real
-        fetch('/api/contact', { method:'POST', body: JSON.stringify(form) })
-
-  STATE:
-    form    — object holding all input values
-    errors  — validation messages keyed by field name
-    toast   — { type, msg } | null  for the status notification
-    loading — bool while submitting
+    WHY: For an institutional convocation website, a contact form
+    is unnecessary. Students just need the direct contact details.
 */
-import React, { useState } from 'react';
+import React from 'react';
 import { siteConfig } from '../data/content';
-import './Sections.css';
+import './Contact.css';
 
-const initialForm = { name: '', email: '', subject: '', message: '' };
+const contactDetails = [
+  {
+    icon: '📍',
+    label: 'Address',
+    content: (
+      <>
+        Student Welfare Division, BITS Pilani,<br />
+        Hyderabad Campus, Jawahar Nagar,<br />
+        Kapra (M), Medchal District,<br />
+        Hyderabad – 500078, Telangana, India
+      </>
+    ),
+    link: null,
+  },
+  {
+    icon: '📧',
+    label: 'Email',
+    content: siteConfig.email,
+    link: `mailto:${siteConfig.email}`,
+  },
+  {
+    icon: '🌐',
+    label: 'Website',
+    content: 'www.bits-pilani.ac.in/hyderabad',
+    link: siteConfig.website,
+  },
+  {
+    icon: '📞',
+    label: 'Phone',
+    content: '+91-40-66303820',
+    link: 'tel:+914066303820',
+  },
+];
 
-const validate = (form) => {
-  const errs = {};
-  if (!form.name.trim())         errs.name    = 'Name is required';
-  if (!form.email.trim())        errs.email   = 'Email is required';
-  else if (!/\S+@\S+\.\S+/.test(form.email)) errs.email = 'Enter a valid email';
-  if (!form.subject.trim())      errs.subject = 'Subject is required';
-  if (!form.message.trim())      errs.message = 'Message is required';
-  return errs;
-};
+const Contact = () => (
+  <section id="contact" className="section contact-section">
+    <div className="container">
 
-const Contact = () => {
-  const [form,    setForm]    = useState(initialForm);
-  const [errors,  setErrors]  = useState({});
-  const [toast,   setToast]   = useState(null);
-  const [loading, setLoading] = useState(false);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm((f) => ({ ...f, [name]: value }));
-    // Clear error as user types
-    if (errors[name]) setErrors((e) => { const n = {...e}; delete n[name]; return n; });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const errs = validate(form);
-    if (Object.keys(errs).length) { setErrors(errs); return; }
-
-    setLoading(true);
-    // ── Simulate API call (replace with real fetch in PERN mode) ──
-    setTimeout(() => {
-      setLoading(false);
-      setForm(initialForm);
-      setToast({ type: 'success', msg: 'Your message has been sent. We will get back to you soon.' });
-      setTimeout(() => setToast(null), 5000);
-    }, 1000);
-  };
-
-  return (
-    <section id="contact" className="section">
-      <div className="container">
-        <div className="section-header reveal">
-          <h2 className="section-title">Contact Us</h2>
-          <div className="divider" />
-          <p className="section-subtitle">Reach out to the Student Welfare Division for all convocation-related queries</p>
-        </div>
-
-        <div className="contact__grid">
-          {/* ── Info panel ─────────────────────────────────────── */}
-          <div className="contact__info reveal">
-            <h3 className="contact__info-title">Hyderabad Campus</h3>
-
-            <div className="contact__detail">
-              <span className="contact__detail-icon">📍</span>
-              <div>
-                <strong>Address</strong>
-                <p>Student Welfare Division, BITS Pilani,<br />
-                   Hyderabad Campus, Jawahar Nagar,<br />
-                   Kapra (M), Medchal District,<br />
-                   Hyderabad – 500078, Telangana, India</p>
-              </div>
-            </div>
-
-            <div className="contact__detail">
-              <span className="contact__detail-icon">📧</span>
-              <div>
-                <strong>Email</strong>
-                <p>
-                  <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
-                </p>
-              </div>
-            </div>
-
-            <div className="contact__detail">
-              <span className="contact__detail-icon">🌐</span>
-              <div>
-                <strong>Website</strong>
-                <p>
-                  <a href={siteConfig.website} target="_blank" rel="noreferrer">
-                    www.bits-pilani.ac.in/hyderabad
-                  </a>
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* ── Form ───────────────────────────────────────────── */}
-          <form className="contact__form reveal" onSubmit={handleSubmit} noValidate>
-            {toast && (
-              <div className={`toast toast--${toast.type}`}>{toast.msg}</div>
-            )}
-
-            {[
-              { name: 'name',    label: 'Full Name',     type: 'text',  placeholder: 'Your full name' },
-              { name: 'email',   label: 'Email Address', type: 'email', placeholder: 'your@email.com' },
-              { name: 'subject', label: 'Subject',       type: 'text',  placeholder: 'What is your query about?' },
-            ].map(({ name, label, type, placeholder }) => (
-              <div key={name} className="form-group">
-                <label htmlFor={name} className="form-label">{label}</label>
-                <input
-                  id={name}
-                  name={name}
-                  type={type}
-                  value={form[name]}
-                  onChange={handleChange}
-                  placeholder={placeholder}
-                  className={`form-input ${errors[name] ? 'form-input--error' : ''}`}
-                />
-                {errors[name] && <span className="form-error">{errors[name]}</span>}
-              </div>
-            ))}
-
-            <div className="form-group">
-              <label htmlFor="message" className="form-label">Message</label>
-              <textarea
-                id="message"
-                name="message"
-                rows={5}
-                value={form.message}
-                onChange={handleChange}
-                placeholder="Describe your query in detail…"
-                className={`form-input form-textarea ${errors.message ? 'form-input--error' : ''}`}
-              />
-              {errors.message && <span className="form-error">{errors.message}</span>}
-            </div>
-
-            <button type="submit" className="btn-maroon btn-submit" disabled={loading}>
-              {loading ? 'Sending…' : 'Send Message →'}
-            </button>
-          </form>
-        </div>
+      {/* ── Section Header ──────────────────────────────────────── */}
+      <div className="section-header reveal">
+        <h2 className="section-title">Contact Us</h2>
+        <div className="divider" />
+        <p className="section-subtitle">
+          Reach out to the Student Welfare Division for all convocation-related queries
+        </p>
       </div>
-    </section>
-  );
-};
+
+      {/* ── Contact Layout ──────────────────────────────────────── */}
+      <div className="contact__layout">
+
+        {/* ── Left: Contact Cards ─────────────────────────────── */}
+        <div className="contact__cards reveal">
+          <h3 className="contact__campus-title">Hyderabad Campus</h3>
+
+          {contactDetails.map((item, i) => (
+            <div key={i} className="contact__card">
+              <div className="contact__card-icon">{item.icon}</div>
+              <div className="contact__card-body">
+                <span className="contact__card-label">{item.label}</span>
+                {item.link ? (
+                  <a
+                    href={item.link}
+                    className="contact__card-value contact__card-link"
+                    target={item.label === 'Website' ? '_blank' : undefined}
+                    rel={item.label === 'Website' ? 'noreferrer' : undefined}
+                  >
+                    {item.content}
+                  </a>
+                ) : (
+                  <p className="contact__card-value">{item.content}</p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* ── Right: Google Maps ──────────────────────────────── */}
+        <div className="contact__map reveal">
+          <iframe
+            title="BITS Pilani Hyderabad Campus Location"
+            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d9837.651252901383!2d78.569141!3d17.541465!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb83594a86132d%3A0xc3e06e9e76cebf3d!2sBirla%20Institute%20of%20Technology%20%26%20Science%20Pilani%2C%20Hyderabad%20Campus!5e1!3m2!1sen!2sin!4v1777812541800!5m2!1sen!2sin"
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            allowFullScreen=""
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </div>
+
+      </div>
+    </div>
+  </section>
+);
 
 export default Contact;

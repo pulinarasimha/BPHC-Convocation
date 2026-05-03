@@ -14,7 +14,7 @@ export const siteConfig = {
   name:    'Convocation 2026',
   college: 'BITS Pilani, Hyderabad Campus',
   email:   'convocation@hyderabad.bits-pilani.ac.in',
-  phone:   '+91-40-66303000',
+  phone:   '+91-40-66303820',
   address: 'Jawahar Nagar, Kapra (M), Medchal District, Hyderabad – 500078, Telangana, India',
   website: 'https://www.bits-pilani.ac.in/hyderabad/',
   universityWebsite: 'https://www.bits-pilani.ac.in/',
@@ -30,14 +30,14 @@ export const importantDates = [
   {
     id: 2,
     label: 'Convocation Rehearsal',
-    date:  'To be announced',
-    icon:  '🎓',
+    date:  '25-July-2026',
+    icon:  '🏛️',
   },
   {
     id: 3,
     label: 'Convocation Ceremony',
-    date:  'To be announced',
-    icon:  '🏛️',
+    date:  '26-July-2026',
+    icon:  '🎓',
   },
 ];
 

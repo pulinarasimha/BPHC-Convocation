@@ -1,0 +1,122 @@
+/*  src/components/Contact.css
+    ─────────────────────────────────────────────────────────────────
+    CHANGE FROM PREVIOUS VERSION:
+      Removed all form-related styles:
+        .contact__form, .form-group, .form-label, .form-input,
+        .form-textarea, .form-error, .btn-submit, .toast
+
+      Added:
+        .contact__layout   — side-by-side cards + map
+        .contact__cards    — left column with info cards
+        .contact__card     — individual contact detail row
+        .contact__map      — right column Google Maps embed
+*/
+
+/* ── Section background ──────────────────────────────────────── */
+.contact-section {
+  background: var(--clr-bg);
+}
+
+/* ── Layout: two columns ─────────────────────────────────────── */
+.contact__layout {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 48px;
+  align-items: start;
+}
+
+/* ── Left column ─────────────────────────────────────────────── */
+.contact__campus-title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--clr-primary);
+  margin-bottom: 1.8rem;
+}
+
+.contact__cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Individual contact card */
+.contact__card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--clr-border);
+}
+.contact__card:last-child {
+  border-bottom: none;
+}
+
+.contact__card-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  background: var(--clr-gold-light);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--clr-border);
+}
+
+.contact__card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.contact__card-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--clr-muted);
+}
+
+.contact__card-value {
+  font-size: 0.95rem;
+  color: var(--clr-text);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.contact__card-link {
+  color: var(--clr-primary);
+  font-weight: 500;
+  transition: color 0.2s, text-decoration 0.2s;
+  text-decoration: none;
+}
+.contact__card-link:hover {
+  color: var(--clr-gold);
+  text-decoration: underline;
+}
+
+/* ── Right column: Map ───────────────────────────────────────── */
+.contact__map {
+  height: 380px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--clr-border);
+  box-shadow: var(--shadow-md);
+}
+.contact__map iframe {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .contact__layout {
+    grid-template-columns: 1fr;
+  }
+  .contact__map {
+    height: 280px;
+  }
+}
