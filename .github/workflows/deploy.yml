@@ -11,19 +11,22 @@
 
       cd /home/ubuntu/convocation-spa/BPHC-Convocation
 
-      echo "🧹 Cleaning old setup..."
-      rm -rf build node_modules package-lock.json
+      echo "🔄 Pull latest code"
+      git pull origin main
 
-      echo "🧼 Clearing npm cache..."
-      npm cache clean --force
+      echo "🧹 Clean old build + deps"
+      rm -rf build node_modules
 
-      echo "📦 Installing dependencies..."
-      npm install --no-audit --no-fund
+      echo "🧼 Fix npm cache corruption"
+      npm cache verify || npm cache clean --force
 
-      echo "🏗️ Building project..."
+      echo "📦 Install dependencies cleanly"
+      npm ci
+
+      echo "🏗️ Build project"
       npm run build
 
-      echo "🔁 Reload nginx..."
+      echo "🔁 Reload nginx"
       sudo systemctl reload nginx || true
 
       echo "✅ Deployment completed"
