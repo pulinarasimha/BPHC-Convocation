@@ -18,25 +18,4 @@ jobs:
 
           ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
 
-          ssh -tt -o StrictHostKeyChecking=no "${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}" << EOF
-            set -e
-
-            cd /home/ubuntu/convocation-spa/BPHC-Convocation
-
-            echo "Pull latest code"
-            git pull origin main
-
-            echo "Clean old build"
-            rm -rf node_modules build package-lock.json
-
-            echo "Install dependencies"
-            npm install
-
-            echo "Build project"
-            npm run build
-
-            echo "Reload nginx"
-            sudo systemctl reload nginx || true
-
-            echo "Deployment completed"
-          EOF
+          ssh -o StrictHostKeyChecking=no "${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}" "bash /home/ubuntu/deploy.sh"
