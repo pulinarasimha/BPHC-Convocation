@@ -19,8 +19,18 @@ jobs:
           ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
 
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
-            cd ${{ secrets.APP_DIR }}
+            cd /home/ubuntu/convocation-spa/BPHC-Convocation
+
             git pull origin main
+
+            # 🔥 IMPORTANT FIX
+            rm -rf build
+
             npm install
             npm run build
+
+            # 🔥 FORCE nginx reload
+            sudo systemctl reload nginx
+
+            echo "✅ Deployment completed"
           EOF
