@@ -1,22 +1,42 @@
-ssh -tt -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
-  set -e
+name: Deploy Convocation
 
-  cd /home/ubuntu/convocation-spa/BPHC-Convocation
+on:
+  push:
+    branches:
+      - main
 
-  echo "🔄 Pulling latest code..."
-  git pull origin main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
 
-  echo "🧹 Cleaning..."
-  rm -rf build node_modules
+    steps:
+      - name: Deploy via SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
 
-  echo "📦 Installing dependencies..."
-  npm install --force
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
 
-  echo "🏗️ Building project..."
-  npm run build
+          ssh -tt -o StrictHostKeyChecking=no "${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}" << EOF
+            set -e
 
-  echo "🔁 Reload nginx..."
-  sudo systemctl reload nginx || true
+            cd /home/ubuntu/convocation-spa/BPHC-Convocation
 
-  echo "✅ Deployment completed"
-EOF
+            echo "🔄 Pulling latest code..."
+            git pull origin main
+
+            echo "🧹 Cleaning..."
+            rm -rf build node_modules
+
+            echo "📦 Installing dependencies..."
+            npm install --force
+
+            echo "🏗️ Building project..."
+            npm run build
+
+            echo "🔁 Reload nginx..."
+            sudo systemctl reload nginx || true
+
+            echo "✅ Deployment completed"
+          EOF
