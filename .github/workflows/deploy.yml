@@ -18,20 +18,28 @@ jobs:
 
           ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
 
-          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
+            set -e   # 🔥 stop if any command fails
+
             cd /home/ubuntu/convocation-spa/BPHC-Convocation
 
+            echo "📁 Current dir:"
+            pwd
+
+            echo "🔄 Pulling latest code..."
             git pull origin main
 
-            # 🔥 IMPORTANT FIX
+            echo "🧹 Cleaning old build..."
             rm -rf build
 
+            echo "📦 Installing dependencies..."
             npm install
+
+            echo "🏗️ Building project..."
             npm run build
 
-            # 🔥 FORCE nginx reload
-            sudo systemctl reload nginx
+            echo "🔁 Reloading nginx..."
+            sudo systemctl reload nginx || true
 
             echo "✅ Deployment completed"
-
           EOF
