@@ -109,14 +109,6 @@
   border-color: #fff;
 }
 
-.hero__email {
-  font-size: 0.9rem;
-  color: rgba(255,255,255,0.7);
-  display: flex;
-  align-items: center;
-}
-.hero__email a:hover { color: var(--clr-gold); }
-
 /* ── Arrows ─────────────────────────────────────────────────────── */
 .hero__arrow {
   position: absolute;

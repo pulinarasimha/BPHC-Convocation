@@ -74,12 +74,6 @@ const Hero = () => {
             Contact Us
           </a>
         </div>
-
-        {/* ── Email strip ─────────────────────────────────────────── */}
-        <p className="hero__email">
-          <span>📧</span>&nbsp;
-          <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
-        </p>
       </div>
 
       {/* ── Previous / Next arrows ───────────────────────────────── */}

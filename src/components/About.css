@@ -25,10 +25,16 @@
 }
 
 /* ── Quick Info Strip ────────────────────────────────────────── */
+/* UPDATED — centers cards for any count */
 .quick-info {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  justify-content: center;
   gap: 16px;
+  flex-wrap: wrap;
+}
+
+.quick-info__card {
+  flex: 0 1 280px;   /* each card max 280px, shrinks on small screens */
 }
 
 .quick-info__card {

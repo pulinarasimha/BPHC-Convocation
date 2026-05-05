@@ -34,12 +34,6 @@ const quickInfo = [
     highlight: false,
   },
   {
-    icon: '👨‍👩‍👧',
-    label: 'Guest Seats',
-    value: 'Maximum 2 per Graduate',
-    highlight: false,
-  },
-  {
     icon: '✅',
     label: 'Registration',
     value: 'Opening Soon',
