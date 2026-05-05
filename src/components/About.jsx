@@ -40,7 +40,7 @@ const quickInfo = [
     highlight: true,
   },
 ];
-
+/* this is a test*/
 const About = () => (
   <section id="about" className="section about-section">
     <div className="container">
