@@ -14,14 +14,11 @@
       echo "🔄 Pull latest code"
       git pull origin main
 
-      echo "🧹 Clean old build + deps"
+      echo "🧹 Clean old build"
       rm -rf build node_modules
 
-      echo "🧼 Fix npm cache corruption"
-      npm cache verify || npm cache clean --force
-
-      echo "📦 Install dependencies cleanly"
-      npm ci
+      echo "📦 Install dependencies"
+      npm install
 
       echo "🏗️ Build project"
       npm run build
