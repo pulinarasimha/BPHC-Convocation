@@ -35,6 +35,3 @@ jobs:
             echo "✅ Deployment completed"
 
           EOF
-
-          EOF
-
