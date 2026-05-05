@@ -10,39 +10,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-     - name: Deploy via SSH
-  run: |
-    mkdir -p ~/.ssh
-    echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
-    chmod 600 ~/.ssh/id_rsa
+      - name: Deploy via SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
 
-    ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
 
-    ssh -tt -o StrictHostKeyChecking=no "${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}" << EOF
-      set -e
+          ssh -tt -o StrictHostKeyChecking=no "${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}" << EOF
+            set -e
 
-      cd /home/ubuntu/convocation-spa/BPHC-Convocation
+            cd /home/ubuntu/convocation-spa/BPHC-Convocation
 
-      echo "🔄 Pull latest code"
-      git pull origin main
+            echo "Pull latest code"
+            git pull origin main
 
-      echo "🧹 FULL cleanup"
-      rm -rf node_modules build package-lock.json
+            echo "Clean old build"
+            rm -rf node_modules build package-lock.json
 
-      echo "🌐 Fix npm registry"
-      npm config set registry https://registry.npmjs.org/
+            echo "Install dependencies"
+            npm install
 
-      echo "🧼 Clear cache"
-      npm cache clean --force
+            echo "Build project"
+            npm run build
 
-      echo "📦 Install fresh dependencies"
-      npm install --no-audit --no-fund
+            echo "Reload nginx"
+            sudo systemctl reload nginx || true
 
-      echo "🏗️ Build project"
-      npm run build
-
-      echo "🔁 Reload nginx"
-      sudo systemctl reload nginx || true
-
-      echo "✅ Deployment completed"
-    EOF
+            echo "Deployment completed"
+          EOF
