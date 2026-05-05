@@ -1,42 +1,30 @@
-name: Deploy Convocation
+- name: Deploy via SSH
+  run: |
+    mkdir -p ~/.ssh
+    echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
+    chmod 600 ~/.ssh/id_rsa
 
-on:
-  push:
-    branches:
-      - main
+    ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
+    ssh -tt -o StrictHostKeyChecking=no "${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}" << EOF
+      set -e
 
-    steps:
-      - name: Deploy via SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+      cd /home/ubuntu/convocation-spa/BPHC-Convocation
 
-          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+      echo "🧹 Cleaning old setup..."
+      rm -rf build node_modules package-lock.json
 
-          ssh -tt -o StrictHostKeyChecking=no "${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}" << EOF
-            set -e
+      echo "🧼 Clearing npm cache..."
+      npm cache clean --force
 
-            cd /home/ubuntu/convocation-spa/BPHC-Convocation
+      echo "📦 Installing dependencies..."
+      npm install --no-audit --no-fund
 
-            echo "🔄 Pulling latest code..."
-            git pull origin main
+      echo "🏗️ Building project..."
+      npm run build
 
-            echo "🧹 Cleaning..."
-            rm -rf build node_modules
+      echo "🔁 Reload nginx..."
+      sudo systemctl reload nginx || true
 
-            echo "📦 Installing dependencies..."
-            npm install --force
-
-            echo "🏗️ Building project..."
-            npm run build
-
-            echo "🔁 Reload nginx..."
-            sudo systemctl reload nginx || true
-
-            echo "✅ Deployment completed"
-          EOF
+      echo "✅ Deployment completed"
+    EOF
