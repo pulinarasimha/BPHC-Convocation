@@ -92,7 +92,7 @@ const Contact = () => (
             </div>
           ))}
         </div>
-/* this is a test*/
+
         {/* ── Right: Google Maps ──────────────────────────────── */}
         <div className="contact__map reveal">
           <iframe
